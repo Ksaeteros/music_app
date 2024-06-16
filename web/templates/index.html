@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron mt-5">
+            <h1 class="display-4">Music App</h1>
+            <p class="lead">Busca tu canción favorita y escúchala al instante.</p>
+            <hr class="my-4">
+            <form method="POST">
+                <div class="form-group">
+                    <label for="song_name">Nombre de la canción</label>
+                    <input type="text" class="form-control" id="song_name" name="song_name" placeholder="Ingresa el nombre de la canción" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
+            </form>
+        </div>
+
+        {% if song %}
+        <div class="card mt-5">
+            <div class="card-body">
+                <h5 class="card-title">{{ song.song_name }}</h5>
+                <p class="card-text">Artista: {{ song.artist }}</p>
+                <p class="card-text">Álbum: {{ song.album }}</p>
+                <audio controls>
+                    <source src="{{ song.url }}" type="audio/mpeg">
+                    Tu navegador no soporta la reproducción de audio.
+                </audio>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

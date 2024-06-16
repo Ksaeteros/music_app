@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package music;
+
+service MusicService {
+  rpc GetSong (SongRequest) returns (SongResponse);
+}
+
+message SongRequest {
+  string song_name = 1;
+}
+
+message SongResponse {
+  string song_name = 1;
+  string artist = 2;
+  string album = 3;
+  string url = 4;
+}
