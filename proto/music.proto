@@ -1,18 +1,17 @@
 syntax = "proto3";
 
-package music;
-
 service MusicService {
-  rpc GetSong (SongRequest) returns (SongResponse);
+    rpc GetSong (SongRequest) returns (SongResponse);
 }
 
 message SongRequest {
-  string song_name = 1;
+    string song_name = 1;
 }
 
 message SongResponse {
-  string song_name = 1;
-  string artist = 2;
-  string album = 3;
-  string url = 4;
+    string song_name = 1;
+    string artist = 2;
+    string album = 3;
+    string album_image = 4;  // Incluye este campo
+    string url = 5;
 }

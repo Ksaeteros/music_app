@@ -40,7 +40,7 @@ class MusicServiceStub(object):
             channel: A grpc.Channel.
         """
         self.GetSong = channel.unary_unary(
-                '/music.MusicService/GetSong',
+                '/MusicService/GetSong',
                 request_serializer=music__pb2.SongRequest.SerializeToString,
                 response_deserializer=music__pb2.SongResponse.FromString,
                 _registered_method=True)
@@ -65,9 +65,9 @@ def add_MusicServiceServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'music.MusicService', rpc_method_handlers)
+            'MusicService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('music.MusicService', rpc_method_handlers)
+    server.add_registered_method_handlers('MusicService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -88,7 +88,7 @@ class MusicService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/music.MusicService/GetSong',
+            '/MusicService/GetSong',
             music__pb2.SongRequest.SerializeToString,
             music__pb2.SongResponse.FromString,
             options,

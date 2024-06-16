@@ -5,32 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music App</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .jumbotron {
+            background-color: #1db954;
+            color: #fff;
+        }
+        .form-control {
+            background-color: #3a3a3a;
+            border: none;
+            color: #fff;
+        }
+        .form-control::placeholder {
+            color: #ccc;
+        }
+        .btn-primary {
+            background-color: #1db954;
+            border: none;
+        }
+        .card {
+            background-color: #1e1e1e;
+            border: none;
+        }
+        .card img {
+            border-radius: 5px;
+        }
+        .card-title, .card-text {
+            color: #fff;
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="jumbotron mt-5">
+        <div class="jumbotron text-center">
             <h1 class="display-4">Music App</h1>
             <p class="lead">Busca tu canción favorita y escúchala al instante.</p>
             <hr class="my-4">
-            <form method="POST">
-                <div class="form-group">
-                    <label for="song_name">Nombre de la canción</label>
-                    <input type="text" class="form-control" id="song_name" name="song_name" placeholder="Ingresa el nombre de la canción" required>
-                </div>
+            <form method="POST" class="form-inline justify-content-center">
+                <input type="text" class="form-control form-control-lg mr-2" id="song_name" name="song_name" placeholder="Ingresa el nombre de la canción" required>
                 <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
             </form>
         </div>
 
         {% if song %}
-        <div class="card mt-5">
-            <div class="card-body">
-                <h5 class="card-title">{{ song.song_name }}</h5>
-                <p class="card-text">Artista: {{ song.artist }}</p>
-                <p class="card-text">Álbum: {{ song.album }}</p>
-                <audio controls>
-                    <source src="{{ song.url }}" type="audio/mpeg">
-                    Tu navegador no soporta la reproducción de audio.
-                </audio>
+        <div class="card mt-5 mx-auto" style="max-width: 540px;">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="{{ song.album_image }}" class="card-img" alt="Album Art">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ song.song_name }}</h5>
+                        <p class="card-text">Artista: {{ song.artist }}</p>
+                        <p class="card-text">Álbum: {{ song.album }}</p>
+                        <audio controls>
+                            <source src="{{ song.url }}" type="audio/mpeg">
+                            Tu navegador no soporta la reproducción de audio.
+                        </audio>
+                    </div>
+                </div>
             </div>
         </div>
         {% endif %}

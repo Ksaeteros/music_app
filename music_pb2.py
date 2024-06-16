@@ -14,17 +14,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0bmusic.proto\x12\x05music\" \n\x0bSongRequest\x12\x11\n\tsong_name\x18\x01 \x01(\t\"M\n\x0cSongResponse\x12\x11\n\tsong_name\x18\x01 \x01(\t\x12\x0e\n\x06\x61rtist\x18\x02 \x01(\t\x12\r\n\x05\x61lbum\x18\x03 \x01(\t\x12\x0b\n\x03url\x18\x04 \x01(\t2B\n\x0cMusicService\x12\x32\n\x07GetSong\x12\x12.music.SongRequest\x1a\x13.music.SongResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0bmusic.proto\" \n\x0bSongRequest\x12\x11\n\tsong_name\x18\x01 \x01(\t\"b\n\x0cSongResponse\x12\x11\n\tsong_name\x18\x01 \x01(\t\x12\x0e\n\x06\x61rtist\x18\x02 \x01(\t\x12\r\n\x05\x61lbum\x18\x03 \x01(\t\x12\x13\n\x0b\x61lbum_image\x18\x04 \x01(\t\x12\x0b\n\x03url\x18\x05 \x01(\t26\n\x0cMusicService\x12&\n\x07GetSong\x12\x0c.SongRequest\x1a\r.SongResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'music_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_SONGREQUEST']._serialized_start=22
-  _globals['_SONGREQUEST']._serialized_end=54
-  _globals['_SONGRESPONSE']._serialized_start=56
-  _globals['_SONGRESPONSE']._serialized_end=133
-  _globals['_MUSICSERVICE']._serialized_start=135
-  _globals['_MUSICSERVICE']._serialized_end=201
+  _globals['_SONGREQUEST']._serialized_start=15
+  _globals['_SONGREQUEST']._serialized_end=47
+  _globals['_SONGRESPONSE']._serialized_start=49
+  _globals['_SONGRESPONSE']._serialized_end=147
+  _globals['_MUSICSERVICE']._serialized_start=149
+  _globals['_MUSICSERVICE']._serialized_end=203
 # @@protoc_insertion_point(module_scope)
