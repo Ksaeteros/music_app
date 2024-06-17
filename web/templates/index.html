@@ -4,84 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #121212;
+            background-image: url('https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnB0M2xscWpxbmFvZmp3NnA2NTJtNHh5bzVwcDB5ODhvdWxya2FlbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8pf5qFhtmMrHG/giphy.webp');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
             color: #fff;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
+            height: 100vh; /* Ajustado para ocupar toda la altura de la pantalla */
+            margin: 0;
+            display: flex;
+            flex-direction: column; /* Para alinear contenido verticalmente */
+            justify-content: center;
+            align-items: center;
         }
-        .container {
-            margin-top: 50px;
-        }
-        .jumbotron {
-            background-color: #1db954;
-            color: #fff;
-        }
-        .form-control {
-            background-color: #3a3a3a;
-            border: none;
-            color: #fff;
-        }
-        .form-control::placeholder {
-            color: #ccc;
-        }
-        .btn-primary {
-            background-color: #1db954;
-            border: none;
+        .search-container {
+            position: absolute;
+            top: 20px; /* Ajustar la posición vertical según sea necesario */
+            background-color: transparent; /* Fondo transparente */
+            z-index: 999; /* Asegura que esté por encima del contenedor de la tarjeta */
         }
         .card {
-            background-color: #1e1e1e;
-            border: none;
+            background-color: rgba(30, 30, 30, 0.8); /* Fondo semitransparente */
+            border-radius: 25px; /* Borde redondeado */
+            overflow: hidden; /* Para asegurar que la imagen circular no se desborde */
+            display: flex;
+            align-items: center;
+            padding: 40px;
         }
         .card img {
-            border-radius: 5px;
+            width: 50%;
+            border-radius: 50%; /* Hace la imagen del álbum circular */
         }
-        .card-title, .card-text {
-            color: #fff;
+        .card-body {
+            padding: 20px;
+            text-align: center; /* Centrar texto dentro de la tarjeta */
+        }
+        .card-title {
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+        .card-text {
+            font-size: 1rem;
         }
         audio {
             width: 100%;
             margin-top: 10px;
+            background-color: rgba(30, 30, 30, 0.274); /* Fondo del reproductor */
+            color: #fff; /* Color del texto dentro del reproductor */
+            border-radius: 5px; /* Borde redondeado */
+            padding: 10px; /* Espaciado interno */
+            box-shadow: 3px 3px 3px 1px rgba(5, 5, 5, 0.2); /* Sombra */
+        }
+ 
+        audio::-webkit-media-controls-panel {
+            background-color: rgba(30, 30, 30, 0.8); /* Fondo de los controles del reproductor */
+            color: #fff; /* Color del texto de los controles */
+            border-radius: 5px; /* Borde redondeado */
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="jumbotron text-center">
-            <h1 class="display-4">Music App</h1>
-            <p class="lead">Busca tu canción favorita y escúchala al instante.</p>
-            <hr class="my-4">
-            <form method="POST" class="form-inline justify-content-center">
-                <input type="text" class="form-control form-control-lg mr-2" id="song_name" name="song_name" placeholder="Ingresa el nombre de la canción" required>
-                <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
-            </form>
-        </div>
-
-        {% if song %}
-        <div class="card mt-5 mx-auto" style="max-width: 540px;">
-            <div class="row no-gutters">
-                <div class="col-md-4">
-                    <img src="{{ song.album_image }}" class="card-img" alt="Album Art">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ song.song_name }}</h5>
-                        <p class="card-text">Artista: {{ song.artist }}</p>
-                        <p class="card-text">Álbum: {{ song.album }}</p>
-                        <audio controls>
-                            <source src="{{ song.url }}" type="audio/mpeg">
-                            Tu navegador no soporta la reproducción de audio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endif %}
+    <div class="search-container">
+        <form method="POST" class="form-inline">
+            <input type="text" class="form-control form-control-lg mr-2" id="song_name" name="song_name" placeholder="Ej.Rock with you" required>
+            <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
+        </form>
     </div>
-
+ 
+    <div class="card mx-auto md-8">
+        <img src="{{ song.album_image }}" class="card-img" alt="Album Art">
+        <div class="card-body">
+            <h5 class="card-title">{{ song.song_name }}</h5>
+            <p class="card-text">Artista: {{ song.artist }}</p>
+            <p class="card-text">Álbum: {{ song.album }}</p>
+            <audio controls>
+                <source src="{{ song.url }}" type="audio/mpeg">
+                Tu navegador no soporta la reproducción de audio.
+            </audio>
+        </div>
+    </div>
+ 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
