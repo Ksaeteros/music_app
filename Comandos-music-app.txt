@@ -1,0 +1,21 @@
+Ejecutar el Proyecto
+
+Iniciar el servidor gRPC:
+python server/music_service.py
+
+Iniciar la aplicación web:
+python web/app.py
+
+Ejecutar las pruebas:
+
+pip install coverage radon
+
+radon cc web/ -a
+radon cc client/ -a
+
+coverage run -m unittest discover
+coverage report -m
+
+
+
+
