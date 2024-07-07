@@ -1,0 +1,20 @@
+<div class="song-info">
+    <img src="{{ song.album_image }}" alt="Album Art">
+    <div class="song-details">
+        <h2>{{ song.song_name }}</h2>
+        <h4>{{ song.artist }}</h4>
+        <p>{{ song.album }}</p>
+        <audio controls>
+            <source src="{{ song.url }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <form method="post" action="{{ url_for('like') }}">
+            <input type="hidden" name="song_name" value="{{ song.song_name }}">
+            <input type="hidden" name="artist" value="{{ song.artist }}">
+            <input type="hidden" name="album" value="{{ song.album }}">
+            <input type="hidden" name="album_image" value="{{ song.album_image }}">
+            <input type="hidden" name="url" value="{{ song.url }}">
+            <button class="btn btn-custom mt-3" type="submit">Like</button>
+        </form>
+    </div>
+</div>

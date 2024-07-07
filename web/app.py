@@ -110,6 +110,16 @@ def register():
             return redirect(url_for('login'))
     return render_template('register.html')
 
+#Funcionalidad para eliminar una música
+@app.route('/delete/<int:song_id>', methods=['POST'])
+@login_required
+def delete_song(song_id):
+    song = Song.query.get_or_404(song_id)
+    if song.playlist.user_id == current_user.id:  # Verificar que la canción pertenece al usuario
+        db.session.delete(song)
+        db.session.commit()
+    return redirect(url_for('playlist'))
+
 
 if __name__ == '__main__':
     with app.app_context():
