@@ -44,12 +44,23 @@ class MusicServiceStub(object):
                 request_serializer=music__pb2.SongRequest.SerializeToString,
                 response_deserializer=music__pb2.SongResponse.FromString,
                 _registered_method=True)
+        self.GetFeaturedAlbums = channel.unary_unary(
+                '/MusicService/GetFeaturedAlbums',
+                request_serializer=music__pb2.Empty.SerializeToString,
+                response_deserializer=music__pb2.AlbumList.FromString,
+                _registered_method=True)
 
 
 class MusicServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def GetSong(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetFeaturedAlbums(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -62,6 +73,11 @@ def add_MusicServiceServicer_to_server(servicer, server):
                     servicer.GetSong,
                     request_deserializer=music__pb2.SongRequest.FromString,
                     response_serializer=music__pb2.SongResponse.SerializeToString,
+            ),
+            'GetFeaturedAlbums': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetFeaturedAlbums,
+                    request_deserializer=music__pb2.Empty.FromString,
+                    response_serializer=music__pb2.AlbumList.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -91,6 +107,33 @@ class MusicService(object):
             '/MusicService/GetSong',
             music__pb2.SongRequest.SerializeToString,
             music__pb2.SongResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetFeaturedAlbums(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/MusicService/GetFeaturedAlbums',
+            music__pb2.Empty.SerializeToString,
+            music__pb2.AlbumList.FromString,
             options,
             channel_credentials,
             insecure,

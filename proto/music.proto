@@ -2,7 +2,10 @@ syntax = "proto3";
 
 service MusicService {
     rpc GetSong (SongRequest) returns (SongResponse);
+    rpc GetFeaturedAlbums (Empty) returns (AlbumList);
 }
+
+message Empty {}
 
 message SongRequest {
     string song_name = 1;
@@ -14,4 +17,14 @@ message SongResponse {
     string album = 3;
     string album_image = 4;  // Incluye este campo
     string url = 5;
+}
+
+message Album {
+    string album_name = 1;
+    string artist = 2;
+    string album_image = 3;
+}
+
+message AlbumList {
+    repeated Album albums = 1;
 }
