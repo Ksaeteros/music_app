@@ -56,24 +56,44 @@ def search():
 @app.route('/like', methods=['POST'])
 @login_required
 def like():
-    song_data = request.form
+    song_name = request.form['song_name']
+    artist = request.form['artist']
+    album = request.form['album']
+    album_image = request.form['album_image']
+    url = request.form['url']
+
+    # Verifica si el usuario tiene una lista de reproducción, si no, crea una nueva
     playlist = Playlist.query.filter_by(user_id=current_user.id).first()
     if not playlist:
-        playlist = Playlist(name="My Playlist", user_id=current_user.id)
+        playlist = Playlist(name="Mi Playlist", user_id=current_user.id)  # Asigna un nombre predeterminado
         db.session.add(playlist)
         db.session.commit()
 
+    # Verifica si la canción ya existe en la lista de reproducción
+    existing_song = Song.query.filter_by(
+        playlist_id=playlist.id, 
+        song_name=song_name, 
+        artist=artist
+    ).first()
+
+    if existing_song:
+        flash('This song is already in your playlist.')
+        return redirect(url_for('search'))
+
+    # Agrega la nueva canción a la lista de reproducción
     new_song = Song(
-        song_name=song_data['song_name'],
-        artist=song_data['artist'],
-        album=song_data['album'],
-        album_image=song_data['album_image'],
-        url=song_data['url'],
-        playlist=playlist
+        song_name=song_name,
+        artist=artist,
+        album=album,
+        album_image=album_image,
+        url=url,
+        playlist_id=playlist.id
     )
     db.session.add(new_song)
     db.session.commit()
-    return redirect(url_for('index'))
+    
+    flash('Song added to your playlist successfully!')
+    return redirect(url_for('search'))
 
 #Funcionalidad para mostrar el playlist de músicas
 @app.route('/playlist')
@@ -94,7 +114,7 @@ def login():
             login_user(user)
             return redirect(url_for('index'))
         else:
-            flash('Invalid username or password')
+            flash('Inválido usuario o contraseña incorrecta')
     return render_template('login.html')
 
 @app.route('/logout')
@@ -103,22 +123,26 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+#Funcionalidad para registrarse
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-        if User.query.filter_by(username=username).first():
-            flash('Username already exists')
-        elif User.query.filter_by(email=email).first():
-            flash('Email already registered')
+        existing_user_by_username = User.query.filter_by(username=username).first()
+        existing_user_by_email = User.query.filter_by(email=email).first()
+
+        if existing_user_by_username:
+            flash('Ya existe un usuario con ese nombre')
+        elif existing_user_by_email:
+            flash('Ya existe un usuario con ese email')
         else:
             user = User(username=username, email=email)
             user.set_password(password)
             db.session.add(user)
             db.session.commit()
-            flash('Registration successful, please log in.')
+            flash('Registro correcto, Inice Sesión.')
             return redirect(url_for('login'))
     return render_template('register.html')
 

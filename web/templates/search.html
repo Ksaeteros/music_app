@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Music</title>
+    <title>Music App - Search</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="../static/style.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Melodi</a>
+        <a class="navbar-brand" href="#">Music_Web</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,18 +32,28 @@
         </div>
     </nav>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h2>Search Music</h2>
-                <form method="post" action="{{ url_for('search') }}" class="search-form">
-                    <div class="input-group">
-                        <input type="text" name="song_name" class="form-control" placeholder="Enter song name" required>
-                        <div class="input-group-append">
-                            <button class="btn btn-custom" type="submit">Search</button>
-                        </div>
-                    </div>
-                </form>
-                {% if song %}
+        <div class="header">
+            <h1>Search Music</h1>
+        </div>
+        <div class="alert alert-info" role="alert">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <form method="post" action="{{ url_for('search') }}">
+            <div class="form-group">
+                <label for="song_name">Song Name:</label>
+                <input type="text" class="form-control" id="song_name" name="song_name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        {% if song %}
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8">
                 <div class="song-info">
                     <img src="{{ song.album_image }}" alt="Album Art">
                     <div class="song-details">
@@ -64,9 +74,9 @@
                         </form>
                     </div>
                 </div>
-                {% endif %}
             </div>
         </div>
+        {% endif %}
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

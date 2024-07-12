@@ -29,12 +29,11 @@ class Playlist(db.Model):
 
 
 class Song(db.Model):
-    __tablename__ = 'song'
     id = db.Column(db.Integer, primary_key=True)
-    song_name = db.Column(db.String(255), nullable=False)  # Aumenta la longitud aquí
-    artist = db.Column(db.String(255), nullable=False)  # Aumenta la longitud aquí
-    album = db.Column(db.String(255), nullable=False)  # Aumenta la longitud aquí
-    album_image = db.Column(db.String(500), nullable=False)  # Aumenta la longitud aquí
-    url = db.Column(db.String(500), nullable=False)  # Aumenta la longitud aquí
+    song_name = db.Column(db.String(150), nullable=False)
+    artist = db.Column(db.String(150), nullable=False)
+    album = db.Column(db.String(150), nullable=False)
+    album_image = db.Column(db.String(250), nullable=False)
+    url = db.Column(db.String(250), nullable=False)  # URL de la canción
     playlist_id = db.Column(db.Integer, db.ForeignKey('playlist.id'), nullable=False)
 
